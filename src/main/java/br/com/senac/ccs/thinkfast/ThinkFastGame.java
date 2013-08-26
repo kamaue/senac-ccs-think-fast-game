@@ -28,7 +28,7 @@ public class ThinkFastGame {
     public void play( String id, String name, AsyncContext asyncContext ) throws IOException {
         Participant participant = new Participant( id, name, asyncContext );
         this.participants.put( id, participant );
-        participant.notify(new Result( currentQuestion, "Welcome!"));
+        participant.notify( new Result( currentQuestion, "Welcome!" ) );
     }
 
     public void bind( String id, AsyncContext asyncContext ) {
@@ -45,10 +45,10 @@ public class ThinkFastGame {
                 Participant winner = participants.remove( id );
                 final List<Participant> all = new ArrayList<Participant>( participants.values() );
                 winner.incrementScore();
-                winner.notify( new Result( current, String.format("Congratzzzzzz %s!! :)", winner.getName()), all ) );
+                winner.notify( new Result( current, String.format( "Congratzzzzzz %s!! :)", winner.getName() ), all ) );
                 for ( Participant participant : participants.values() ) {
                     participant.notify( new Result( current,
-                                        String.format( "The participant %s was more faster "
+                                                    String.format( "The participant %s was more faster "
                             + "try again this one", winner.getName() ), all ) );
                 }
                 this.participants.put( id, winner );
@@ -65,9 +65,10 @@ public class ThinkFastGame {
     }
 
     public void init() {
+        this.questions.add( new Question( "Qual a capital do Brasil?", Arrays.asList( new String[]{ "Brasília", "São Paulo", "Rio de Janeiro" } ), "Brasília" ) );
         this.questions.add( new Question( "Qual a capital dos EUA?", Arrays.asList( new String[]{ "Washington DC", "California", "Nevada" } ), "Washington DC" ) );
         this.questions.add( new Question( "Qual a capital da Russia?", Arrays.asList( new String[]{ "Berlin", "Paris", "Moscou" } ), "Moscou" ) );
-        this.questionsPool = Iterators.cycle( questions );
+        this.questionsPool = Iterators.cycle( new ArrayList( questions ) );
         this.currentQuestion = questionsPool.next();
     }
 }

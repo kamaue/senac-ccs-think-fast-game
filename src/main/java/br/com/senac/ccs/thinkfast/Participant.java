@@ -1,15 +1,11 @@
 package br.com.senac.ccs.thinkfast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import javax.servlet.AsyncContext;
-
 public class Participant {
 
     private String id;
     private String name;
     private int score;
-    private AsyncContext asyncContext;
+    private Screen screen;
 
     public Participant() {
         this.score = 0;
@@ -21,9 +17,9 @@ public class Participant {
         this.name = name;
     }
 
-    public Participant( String id, String name, AsyncContext asyncContext ) {
+    public Participant( String id, String name, Screen screen ) {
         this( id, name );
-        this.asyncContext = asyncContext;
+        this.screen = screen;
     }
 
     public String getId() {
@@ -42,17 +38,13 @@ public class Participant {
         this.score++;
     }
 
-    public void setAsyncContext( AsyncContext asyncContext ) {
-        this.asyncContext = asyncContext;
+    public void setScreen( Screen screen ) {
+        this.screen = screen;
     }
 
-    public void notify( Result result ) throws IOException {
-        if(asyncContext != null ) {
-            ObjectMapper mapper = new ObjectMapper();
-            final String json = mapper.writeValueAsString( result );
-            asyncContext.getResponse().getWriter().write( json );
-            asyncContext.complete();
-            asyncContext = null;
+    public void notify( Result result ) {
+        if( screen != null ) {
+            screen.show( result );
         }
     }
 }

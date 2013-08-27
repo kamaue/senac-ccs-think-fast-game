@@ -25,11 +25,13 @@ public class ThinkFastController extends HttpServlet {
         final String action = req.getParameter( "action" );
         if ( "play".equals( action ) ) {
             AsyncContext startAsync = req.startAsync();
-            game.play( id, req.getParameter( "participant" ), startAsync );
+            Screen screen = new WebScreen(startAsync);
+            game.play( id, req.getParameter( "participant" ), screen );
         }
         else if ( "bind".equals( action ) ) {
             AsyncContext startAsync = req.startAsync();
-            game.bind( id, startAsync );
+            Screen screen = new WebScreen(startAsync);
+            game.bind( id, screen );
         }
         else if ( "answer".equals( action ) ) {
             game.answer( id, req.getParameter( "answer" ) );

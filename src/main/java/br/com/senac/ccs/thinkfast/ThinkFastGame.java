@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import javax.servlet.AsyncContext;
 
 public class ThinkFastGame {
 
@@ -25,15 +24,15 @@ public class ThinkFastGame {
         this.lock = new ReentrantLock();
     }
 
-    public void play( String id, String name, AsyncContext asyncContext ) throws IOException {
-        Participant participant = new Participant( id, name, asyncContext );
+    public void play( String id, String name, Screen screen ) throws IOException {
+        Participant participant = new Participant( id, name, screen );
         this.participants.put( id, participant );
         participant.notify( new Result( currentQuestion, "Welcome!" ) );
     }
 
-    public void bind( String id, AsyncContext asyncContext ) {
+    public void bind( String id, Screen screen ) {
         Participant participant = this.participants.get( id );
-        participant.setAsyncContext( asyncContext );
+        participant.setScreen( screen );
     }
 
     public void answer( String id, String answer ) throws IOException {
@@ -65,7 +64,7 @@ public class ThinkFastGame {
     }
 
     public void init() {
-        this.questions.add( new Question( "Qual a capital do Brasil?", Arrays.asList( new String[]{ "Brasília", "São Paulo", "Rio de Janeiro" } ), "Brasília" ) );
+        this.questions.add( new Question( "Qual a capital do Brasil?", Arrays.asList( new String[]{ "Brasilia", "São Paulo", "Rio de Janeiro" } ), "Brasilia" ) );
         this.questions.add( new Question( "Qual a capital dos EUA?", Arrays.asList( new String[]{ "Washington DC", "California", "Nevada" } ), "Washington DC" ) );
         this.questions.add( new Question( "Qual a capital da Russia?", Arrays.asList( new String[]{ "Berlin", "Paris", "Moscou" } ), "Moscou" ) );
         this.questionsPool = Iterators.cycle( new ArrayList( questions ) );

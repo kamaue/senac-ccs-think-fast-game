@@ -4,6 +4,8 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 @WebServlet( urlPatterns = { "/thinkfast" },
              asyncSupported = true )
@@ -14,8 +16,8 @@ public class ThinkFastController extends HttpServlet {
     @Override
     public void init( ServletConfig config ) throws ServletException {
         super.init( config );
-        this.game = new ThinkFastGame();
-        this.game.init();
+        WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext( config.getServletContext() );
+        this.game = applicationContext.getBean( ThinkFastGame.class );
     }
 
     @Override

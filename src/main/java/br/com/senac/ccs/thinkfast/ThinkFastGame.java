@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import javax.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ThinkFastGame {
 
     private final ConcurrentHashMap<String, Participant> participants;
@@ -63,6 +66,7 @@ public class ThinkFastGame {
         }
     }
 
+    @PostConstruct
     public void init() {
         this.questions.add( new Question( "Qual a capital do Brasil?", Arrays.asList( new String[]{ "Brasilia", "São Paulo", "Rio de Janeiro" } ), "Brasilia" ) );
         this.questions.add( new Question( "Qual a capital dos EUA?", Arrays.asList( new String[]{ "Washington DC", "California", "Nevada" } ), "Washington DC" ) );

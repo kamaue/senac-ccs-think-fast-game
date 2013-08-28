@@ -43,9 +43,7 @@
                     );
                 };
                 self.bind = function() {
-                    $.getJSON("/thinkfast",
-                    {action: "bind"},
-                    function(data){
+                    $.getJSON("/thinkfast", {action: "bind"}, function(data){
                             ko.mapping.fromJS(data, {}, self);
                     }).complete(function() {
                         self.bind();
